@@ -3,12 +3,16 @@ import os
 import sys
 DATA_FILE = "my_notes.json"
 
+
+
+
+
 def load_d():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-        return{}
-    
+    return{}
+        
 
 def save_d(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -30,11 +34,9 @@ def show_all(data):
         print("пусто")
         return
     for cat,items in data.items():
-        print(f"\n категория {cat}")
+        print(f"\n  {cat}")
         for name,desc in items.items():
             print(f"\n  {name}:{desc}")    
-
-
 
 
 
@@ -52,12 +54,12 @@ def main():
             add_entry(data)
         elif choice == "python expenses.py all list":
             show_all(data)
-        elif choice == "python expenses.py list":
-            show_by_category(data)
         elif choice == "python expenses.py exit":
             print("До свидания!")            
             break
         else:
             print(" Неверный выбор.")
+
+
 if __name__ == "__main__":
     main()
