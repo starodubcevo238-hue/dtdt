@@ -1,3 +1,44 @@
+import json
+import os
+import sys
+
+DATA_FILE = "my_notes.json"
+
+
+def load_d():
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+
+def save_d(data):
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+def add_entry(data, args):
+    if len(args) < 3:
+        print("Ошибка! Формат: add <стоимость> <категория> <название>")
+        return
+    try:
+        cost = float(args[0])
+    except ValueError:
+        print("Ошибка: стоимость должна быть числом!")
+        return
+
+    category = args[1].lower()
+    name = " ".join(args[2:])
+
+    if category not in data:
+        print(f"Ошибка: категория '{category}' не существует. Сначала добавьте её.")
+        return
+
+    data[category].append({"name": name, "cost": cost})
+    save_d(data)
     print("Расход успешно добавлен!")
 
 
@@ -111,3 +152,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    //доделать фигню(решить прблему) с терминалом и сюда отправить 
